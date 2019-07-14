@@ -4,45 +4,32 @@ import org.omg.PortableInterceptor.INACTIVE;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Add {
     public int getSumOfEvens(int leftBorder, int rightBorder) {
 //        throw new NotImplementedException();
-        int sum = 0;
+
         int left = leftBorder < rightBorder ? leftBorder : rightBorder;
         int right = leftBorder < rightBorder ? rightBorder : leftBorder;
-        for (int i = left; i < right; i++) {
-            sum += (i % 2 == 0 ? i : 0);
-        }
-        return sum;
+        List<Integer> numbers = IntStream.rangeClosed(left,right).boxed().collect(Collectors.toList());
+        return numbers.stream().filter(i -> i % 2 == 0).collect(Collectors.toList()).stream().mapToInt(i -> i).sum();
     }
 
     public int getSumOfOdds(int leftBorder, int rightBorder) {
         //throw new NotImplementedException();
-        int sum = 0;
         int left = leftBorder < rightBorder ? leftBorder : rightBorder;
         int right = leftBorder < rightBorder ? rightBorder : leftBorder;
-        for (int i = left; i < right; i++) {
-            sum += (i % 2 != 0 ? i : 0);
-        }
-        return sum;
+        List<Integer> numbers = IntStream.rangeClosed(left,right).boxed().collect(Collectors.toList());
+        return numbers.stream().filter(i -> i % 2 != 0).collect(Collectors.toList()).stream().mapToInt(i -> i).sum();
     }
 
     public int getSumTripleAndAddTwo(List<Integer> arrayList) {
         //throw new NotImplementedException();
-        int sum = 0;
         List<Integer> resultNumber = arrayList.stream().map(i -> i * 3 + 2 ).distinct().collect(Collectors.toList());
-        for (int number : resultNumber) {
-            sum += number;
-        }
-//        IntSummaryStatistics stats = resultNumber.stream().mapToInt((x) -> x).summaryStatistics();
-//        stats.getSum();
-        return sum;
+        return resultNumber.stream().mapToInt(i -> i).sum();
     }
 
     public List<Integer> getTripleOfOddAndAddTwo(List<Integer> arrayList) {
